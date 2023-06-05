@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,minimum-scale=1">
+		<title>Login</title>
+        
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link href="./style.css" rel="stylesheet" type="text/css">
+	</head>
+	<body>
+		<script>
+
+function validate(){
+const username = document.getElementById("Username").value;
+const password = document.getElementById("Password").value;
+if (username.length<1 && password.length<1){  
+	document.getElementById("nameloc").innerHTML=  
+"Please enter your name";  
+  alert("Username and password can't be blank");  
+  
+}
+else if(username.length && password.length<1){  
+  alert("Password can't be blank.");  
+  
+  }
+  else if(username.length<1 && password.length){  
+  alert("username can't be blank.");  
+  
+  }
+ else
+  {  
+fetch(`http://localhost:3000/api/login?Username=${username}&Password=${password}`).then(
+
+    respose => respose.json()
+
+)
+
+.then(data => {
+ if(data == true){
+
+  window.location.href = "login.html";
+
+ }
+
+else{
+
+  window.location.href = "invalid.html";
+
+}
+
+// console api
+
+//const apiResponseElement = document.getElementById('apiResponse');
+
+//apiResponseElement.innerHTML = JSON.stringify(data);
+
+})
+
+.catch(error => {
+	console.error('Error:', error);
+
+});
+  }
+}
+</script>
+		<div class="login">
+			<h1 style="font-weight: bold;">Login</h1>
+           <!-- <div id="apiResponse"></div> -->
+			<form >
+				<label for="username">
+				<i class="fas fa-user"></i>
+				</label>
+				<input type="text" name="Username" placeholder="username" id="Username">
+				<label for="password">
+				<i class="fas fa-lock"></i>
+				</label>		
+				<input type="password" name="Password" placeholder="password" id="Password">
+				<button type="button" onclick="validate()" class="btn btn-success" style="margin-right: 20px;margin-left: 2px;" >Login</button>
+				<input type="reset"   class="btn btn-danger" value="Clear">
+				
+				
+				
+			</form>
+			<br>
+				
+		</div>
+	</body>
+</html>
+
+
+
